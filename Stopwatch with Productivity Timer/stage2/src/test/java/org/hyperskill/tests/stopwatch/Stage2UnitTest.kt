@@ -1,5 +1,4 @@
-
-package org.hyperskill.tests.stopwatch // keep package name away from the one in instrumentedPackages config
+package org.hyperskill.tests.stopwatch
 
 import android.widget.Button
 import android.widget.TextView
