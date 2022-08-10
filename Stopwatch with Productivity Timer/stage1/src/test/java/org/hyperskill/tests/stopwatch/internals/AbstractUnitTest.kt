@@ -1,4 +1,4 @@
-package org.hyperskill.projectname.internals
+package org.hyperskill.tests.stopwatch.internals
 
 import android.app.Activity
 import android.content.Intent

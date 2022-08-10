@@ -1,9 +1,9 @@
-package org.hyperskill.stopwatch.tests
+package org.hyperskill.tests.stopwatch
 
 import android.widget.Button
 import android.widget.TextView
 import org.hyperskill.stopwatch.MainActivity
-import org.hyperskill.stopwatch.tests.internals.StopwatchUnitTest
+import org.hyperskill.tests.stopwatch.internals.StopwatchUnitTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith

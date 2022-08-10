@@ -22,9 +22,9 @@ files:
   visible: true
 - name: src/main/java/org/hyperskill/stopwatch/MainActivity.kt
   visible: true
-- name: src/test/java/org/hyperskill/stopwatch/tests/Stage1UnitTest.kt
+- name: src/test/java/org/hyperskill/tests/stopwatch/Stage1UnitTest.kt
   visible: false
-- name: src/test/java/org/hyperskill/stopwatch/tests/internals/StopwatchUnitTest.kt
+- name: src/test/java/org/hyperskill/tests/stopwatch/internals/AbstractUnitTest.kt
   visible: false
-- name: src/test/java/org/hyperskill/stopwatch/tests/internals/AbstractUnitTest.kt
+- name: src/test/java/org/hyperskill/tests/stopwatch/internals/StopwatchUnitTest.kt
   visible: false
