@@ -1,0 +1,14 @@
+type: edu
+files:
+- name: src/test/java/org/hyperskill/stopwatch/ExampleUnitTest.kt
+  visible: false
+- name: src/test/java/org/hyperskill/stopwatch/TimerStateUnitTest.kt
+  visible: false
+- name: src/test/java/org/hyperskill/stopwatch/SettingsDialogFragmentTest.kt
+  visible: false
+- name: src/test/java/resources/robolectric.properties
+  visible: false
+- name: src/test/java/org/hyperskill/stopwatch/TestUtils.kt
+  visible: false
+- name: src/test/java/org/hyperskill/stopwatch/ProgressBarUnitTests.kt
+  visible: false
