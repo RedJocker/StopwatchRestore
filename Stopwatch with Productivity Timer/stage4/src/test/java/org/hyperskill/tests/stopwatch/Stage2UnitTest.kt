@@ -143,7 +143,7 @@ class Stage2UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
         testActivity {
             val expected = "01:59"
 
-            startButton.clickAndRun(119_100)
+            startButton.clickAndRun(119_700)
 
             val actual = textView.text
             assertEquals("Don't rush  on counting. $messageTextViewAssertionError", expected, actual)
