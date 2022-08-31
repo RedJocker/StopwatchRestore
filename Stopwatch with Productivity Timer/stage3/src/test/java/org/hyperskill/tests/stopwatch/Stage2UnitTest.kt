@@ -38,14 +38,15 @@ class Stage2UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
         activity.findViewByString("textView")
     }
 
-    private val messageTextViewAssertionError = "in TextView property \"text\""
+    private val messageTextViewAssertionError = "For view with id textView, in property \"text\""
 
     @Test
     fun checkCheckTimerInitialValue() {
         testActivity {
             val expected = "00:00"
             val actual = textView.text
-            assertEquals(messageTextViewAssertionError, expected, actual)
+            val message = "Wrong initial value. $messageTextViewAssertionError"
+            assertEquals(message, expected, actual)
         }
     }
 
@@ -57,7 +58,8 @@ class Stage2UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
             startButton.clickAndRun(300)
 
             val actual = textView.text
-            assertEquals(messageTextViewAssertionError, expected, actual)
+            val message = "It should take one second to count one second. $messageTextViewAssertionError"
+            assertEquals(message, expected, actual)
         }
     }
 
@@ -69,7 +71,8 @@ class Stage2UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
             startButton.clickAndRun(1100)
 
             val actual = textView.text
-            assertEquals(messageTextViewAssertionError, expected, actual)
+            val message = "After one second one second should be counted. $messageTextViewAssertionError"
+            assertEquals(message, expected, actual)
         }
     }
 
@@ -83,7 +86,8 @@ class Stage2UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
             resetButton.clickAndRun(200)
 
             val actual = textView.text
-            assertEquals(messageTextViewAssertionError, expected, actual)
+            val message = "After reset the counter should reset. $messageTextViewAssertionError"
+            assertEquals(message, expected, actual)
         }
     }
 
@@ -98,7 +102,9 @@ class Stage2UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
             startButton.clickAndRun(10_100)
 
             val actual = textView.text
-            assertEquals(messageTextViewAssertionError, expected, actual)
+            val message = "Clicking start multiple times should still count one second per second. " +
+                    messageTextViewAssertionError
+            assertEquals(message, expected, actual)
         }
     }
 
@@ -112,7 +118,10 @@ class Stage2UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
             resetButton.clickAndRun(10_000)
 
             val actual = textView.text
-            assertEquals(messageTextViewAssertionError, expected, actual)
+            val message =
+                "Clicking reset multiple times should still keep counter reset. " +
+                        messageTextViewAssertionError
+            assertEquals(message, expected, actual)
         }
     }
 
@@ -124,7 +133,8 @@ class Stage2UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
             startButton.clickAndRun(60_100)
 
             val actual = textView.text
-            assertEquals(messageTextViewAssertionError, expected, actual)
+            val message = "60 seconds should be one minute. $messageTextViewAssertionError"
+            assertEquals(message, expected, actual)
         }
     }
 
@@ -136,7 +146,7 @@ class Stage2UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
             startButton.clickAndRun(119_100)
 
             val actual = textView.text
-            assertEquals(messageTextViewAssertionError, expected, actual)
+            assertEquals("Don't rush  on counting. $messageTextViewAssertionError", expected, actual)
         }
     }
 }
