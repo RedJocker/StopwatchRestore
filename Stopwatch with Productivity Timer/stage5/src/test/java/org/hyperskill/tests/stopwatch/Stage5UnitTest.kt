@@ -28,8 +28,8 @@ class Stage5UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
     private val startButton: Button by lazy {
         val view = activity.findViewByString<Button>("startButton")
 
-        val message = "in button property \"text\""
-        assertEquals(message, "Start", view.text)
+        val message = "For view with id \"startButton\", in property \"text\""
+        assertEquals(message, "start", view.text.toString().lowercase())
 
         view
     }
@@ -37,8 +37,8 @@ class Stage5UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
     private val settingsButton: Button by lazy {
         val view = activity.findViewByString<Button>("settingsButton")
 
-        val message = "in button property \"text\""
-        assertEquals(message, "Settings", view.text)
+        val message = "For view with id \"settingsButton\", in property \"text\""
+        assertEquals(message, "settings", view.text.toString().lowercase())
 
         view
     }
@@ -60,10 +60,8 @@ class Stage5UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
             dialog.findViewByString<EditText>("upperLimitEditText").setText("$secondsToCount")
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).clickAndRun()
 
-            startButton.clickAndRun()
-
             val timeToSleep = secondsToCount * 1000 + 1100L
-            shadowLooper.idleFor(timeToSleep, TimeUnit.MILLISECONDS)
+            startButton.clickAndRun(timeToSleep)
 
             val notification: Notification? = notificationManager.getNotification(393939)
 

@@ -22,8 +22,8 @@ class Stage3UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
     private val startButton: Button by lazy {
         val view = activity.findViewByString<Button>("startButton")
 
-        val message = "in button property \"text\""
-        assertEquals(message, "Start", view.text)
+        val message = "For view with id \"startButton\", in property \"text\""
+        assertEquals(message, "start", view.text.toString().lowercase())
 
         view
     }
@@ -31,8 +31,8 @@ class Stage3UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
     private val resetButton: Button by lazy {
         val view = activity.findViewByString<Button>("resetButton")
 
-        val message = "in button property \"text\""
-        assertEquals(message, "Reset", view.text)
+        val message = "For view with id \"resetButton\", in property \"text\""
+        assertEquals(message, "reset", view.text.toString().lowercase())
 
         view
     }
