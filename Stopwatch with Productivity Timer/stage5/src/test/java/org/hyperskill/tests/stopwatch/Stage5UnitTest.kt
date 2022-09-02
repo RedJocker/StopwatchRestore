@@ -5,22 +5,24 @@ import android.app.Notification
 import android.app.NotificationManager
 import android.content.Context
 import android.graphics.drawable.Icon
+import android.os.Handler
 import android.widget.Button
 import android.widget.EditText
 import org.hyperskill.stopwatch.MainActivity
+import org.hyperskill.tests.stopwatch.internals.CustomShadowCountDownTimer
 import org.hyperskill.tests.stopwatch.internals.StopwatchUnitTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowAlertDialog
-import java.util.concurrent.TimeUnit
 
 // Version 2.0
-@Config(instrumentedPackages = ["org.hyperskill.stopwatch"])
+@Config(instrumentedPackages = ["org.hyperskill.stopwatch"], shadows = [CustomShadowCountDownTimer::class])
 @RunWith(RobolectricTestRunner::class)
 class Stage5UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java) {
 
@@ -49,6 +51,10 @@ class Stage5UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
         )
     }
 
+    @Before
+    fun setup() {
+        CustomShadowCountDownTimer.handler = Handler(activity.mainLooper)
+    }
 
     @Test
     fun testShouldCheckNotificationVisibilityOnTimeExceed() {

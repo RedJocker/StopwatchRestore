@@ -2,13 +2,15 @@ package org.hyperskill.tests.stopwatch
 
 import android.app.AlertDialog
 import android.graphics.Color
+import android.os.Handler
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ProgressBar
 import android.widget.TextView
 import org.hyperskill.stopwatch.MainActivity
+import org.hyperskill.tests.stopwatch.internals.CustomShadowCountDownTimer
 import org.hyperskill.tests.stopwatch.internals.StopwatchUnitTest
 import org.junit.Assert.*
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -17,7 +19,7 @@ import org.robolectric.shadows.ShadowAlertDialog
 import java.util.concurrent.TimeUnit
 
 // Version 2.0
-@Config(instrumentedPackages = ["org.hyperskill.stopwatch"])
+@Config(instrumentedPackages = ["org.hyperskill.stopwatch"], shadows = [CustomShadowCountDownTimer::class])
 @RunWith(RobolectricTestRunner::class)
 class Stage4UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java) {
 
@@ -56,6 +58,10 @@ class Stage4UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
 
     private val messageDialogNotFound = "Is dialog shown when \"settingsButton\" is clicked?"
 
+    @Before
+    fun setup() {
+        CustomShadowCountDownTimer.handler = Handler(activity.mainLooper)
+    }
 
     @Test
     fun testShouldCheckSettingsButtonExist() {
