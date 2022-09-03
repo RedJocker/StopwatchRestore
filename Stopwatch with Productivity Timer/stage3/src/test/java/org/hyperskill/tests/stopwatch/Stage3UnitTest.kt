@@ -1,12 +1,15 @@
 package org.hyperskill.tests.stopwatch
 
+import android.os.Handler
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import org.hyperskill.stopwatch.MainActivity
+import org.hyperskill.tests.stopwatch.internals.CustomShadowCountDownTimer
 import org.hyperskill.tests.stopwatch.internals.StopwatchUnitTest
 import org.junit.Assert.*
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -14,7 +17,7 @@ import org.robolectric.annotation.Config
 import java.util.concurrent.TimeUnit
 
 // Version 2.0
-@Config(instrumentedPackages = ["org.hyperskill.stopwatch"])
+@Config(instrumentedPackages = ["org.hyperskill.stopwatch"], shadows = [CustomShadowCountDownTimer::class])
 @RunWith(RobolectricTestRunner::class)
 class Stage3UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java) {
 
@@ -50,6 +53,10 @@ class Stage3UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
 
     private val messageInvalidColor = "invalid progress bar color. LastColor: %d"
 
+    @Before
+    fun setup() {
+        CustomShadowCountDownTimer.handler = Handler(activity.mainLooper)
+    }
 
     @Test
     fun checkProgressBarExists() {
