@@ -72,7 +72,6 @@ class Stage3UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
             val actual = progressBar.visibility
             assertNotEquals(messageInvalidVisibility, unexpected, actual)
         }
-
     }
 
     @Test
