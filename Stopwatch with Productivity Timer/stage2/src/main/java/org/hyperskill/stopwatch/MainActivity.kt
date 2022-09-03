@@ -2,57 +2,39 @@ package org.hyperskill.stopwatch
 
 import android.os.Bundle
 import android.os.Handler
-import android.os.SystemClock
-import android.widget.Button
-import android.widget.TextView
+import android.os.Looper
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import java.text.DecimalFormat
+import org.hyperskill.stopwatch.Utils.timeString
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var mStart:Button
-    private lateinit var mReset:Button
-    private lateinit var mText: TextView
-    private val handle = Handler()
-    //private var baseTime = SystemClock.elapsedRealtime()
-    private var isStart = false
+
+    private lateinit var layout: MainActivityLayout
+    private lateinit var timer : Timer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        mStart = findViewById(R.id.startButton)
-        mReset = findViewById(R.id.resetButton)
-        mText = findViewById(R.id.textView)
-
-        mStart.setOnClickListener {
-            if (!isStart) {
-                runnable.baseTime = System.currentTimeMillis()
-                handle.postDelayed(runnable, 1000)
-                isStart = true
-            }
-
-        }
-
-        mReset.setOnClickListener {
-            isStart = false
-            handle.removeCallbacks(runnable)
-            mText.text = "00:00"
-        }
-
+        layout = MainActivityLayout(this)
+        layout.startButton.setOnClickListener(::onStartButtonClick)
+        layout.resetButton.setOnClickListener(::onResetButtonClick)
+        timer = Timer(Handler(Looper.getMainLooper()), ::onTimerTick)
+        setContentView(layout)
     }
 
+    private fun onTimerTick(secondsElapsed: Long) {
+        runOnUiThread {
+            layout.textView.text = secondsElapsed.timeString()
+        }
+    }
 
-     private val runnable = object : Runnable {
-         var baseTime = 0L
-         override fun run() {
-                 //val time = (SystemClock.elapsedRealtime() - baseTime)/ 1000
+    private fun onStartButtonClick(v: View) {
+        timer.start()
+    }
 
-                 val time = (System.currentTimeMillis() - baseTime) / 1000
-                 val mm: String = DecimalFormat("00").format(time % 3600 / 60)
-                 val ss: String = DecimalFormat("00").format(time % 60)
-                 mText.text = "$mm:$ss"
-                 handle.postDelayed(this, 1000)
-
-         }
-
-     }
+    private fun onResetButtonClick(v: View) {
+        timer.reset()
+        runOnUiThread {
+            layout.textView.text = 0L.timeString()
+        }
+    }
 }
