@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="startButton"    type="id" />
+    <item name="resetButton"    type="id" />
+    <item name="settingsButton" type="id" />
+    <item name="progressBar"    type="id" />
+    <item name="textView"       type="id" />
+    <item name="mainLayout"     type="id" />
+
+    <item name="settingsTextView"   type="id" />
+    <item name="upperLimitEditText" type="id" />
+</resources>
