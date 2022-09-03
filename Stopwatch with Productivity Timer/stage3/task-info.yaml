@@ -4,8 +4,6 @@ files:
   visible: true
 - name: src/main/AndroidManifest.xml
   visible: true
-- name: src/main/res/layout/activity_main.xml
-  visible: true
 - name: src/main/res/values/colors.xml
   visible: true
 - name: src/main/res/values/styles.xml
@@ -22,15 +20,21 @@ files:
   visible: true
 - name: src/main/java/org/hyperskill/stopwatch/MainActivity.kt
   visible: true
-- name: src/main/res/color/progress_colors.xml
-  visible: true
 - name: src/test/java/org/hyperskill/tests/stopwatch/internals/AbstractUnitTest.kt
   visible: false
 - name: src/test/java/org/hyperskill/tests/stopwatch/internals/StopwatchUnitTest.kt
-  visible: false
-- name: src/test/java/org/hyperskill/tests/stopwatch/Stage1UnitTest.kt
   visible: false
 - name: src/test/java/org/hyperskill/tests/stopwatch/Stage2UnitTest.kt
   visible: false
 - name: src/test/java/org/hyperskill/tests/stopwatch/Stage3UnitTest.kt
   visible: false
+- name: src/main/res/values/ids.xml
+  visible: true
+- name: src/main/java/org/hyperskill/stopwatch/Utils.kt
+  visible: true
+- name: src/main/java/org/hyperskill/stopwatch/MainActivityLayout.kt
+  visible: true
+- name: src/main/java/org/hyperskill/stopwatch/CustomProgressBar.kt
+  visible: true
+- name: src/main/java/org/hyperskill/stopwatch/Timer.kt
+  visible: true
