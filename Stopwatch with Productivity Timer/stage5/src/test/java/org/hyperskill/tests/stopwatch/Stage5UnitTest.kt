@@ -2,6 +2,7 @@ package org.hyperskill.tests.stopwatch
 
 import android.app.AlertDialog
 import android.app.Notification
+import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.graphics.drawable.Icon
@@ -11,8 +12,7 @@ import android.widget.EditText
 import org.hyperskill.stopwatch.MainActivity
 import org.hyperskill.tests.stopwatch.internals.CustomShadowCountDownTimer
 import org.hyperskill.tests.stopwatch.internals.StopwatchUnitTest
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,6 +26,10 @@ import org.robolectric.shadows.ShadowAlertDialog
 @RunWith(RobolectricTestRunner::class)
 class Stage5UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java) {
 
+    companion object {
+        const val CHANNEL_ID = "org.hyperskill"
+        const val NOTIFICATION_ID = 393939
+    }
 
     private val startButton: Button by lazy {
         val view = activity.findViewByString<Button>("startButton")
@@ -69,16 +73,31 @@ class Stage5UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
             val timeToSleep = secondsToCount * 1000 + 1100L
             startButton.clickAndRun(timeToSleep)
 
-            val notification: Notification? = notificationManager.getNotification(393939)
+            val notificationChannel =
+                notificationManager.notificationChannels.mapNotNull {
+                    it as NotificationChannel?
+                }.firstOrNull {
+                    it.id == CHANNEL_ID
+                }
+
+            assertNotNull("Could not find any NotificationChannel with id \"$CHANNEL_ID\"", notificationChannel)
+            notificationChannel!!
+
+            assertTrue(
+                "Wrong importance for NotificationChannel, should be IMPORTANCE_HIGH",
+                NotificationManager.IMPORTANCE_HIGH == notificationChannel.importance
+            )
+
+            val notification: Notification? = notificationManager.getNotification(NOTIFICATION_ID)
 
             val messageNotificationId =
                 "Could not find notification with id 393939. Did you set the proper id?"
             assertNotNull(messageNotificationId, notification)
             notification!!
 
-            val messageChannelId = "The notification channel id does not equals \"org.hyperskill\""
+            val messageChannelId = "The notification channel id does not equals \"$CHANNEL_ID\""
             val actualChannelId = notification.channelId
-            assertEquals(messageChannelId, "org.hyperskill", actualChannelId)
+            assertEquals(messageChannelId, CHANNEL_ID, actualChannelId)
 
             val messageIcon = "Have you set the notification smallIcon?"
             val actualIcon: Icon? = notification.smallIcon
@@ -91,6 +110,22 @@ class Stage5UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
             val messageContent = "Have you set the notification content?"
             val actualContent = notification.extras.getCharSequence(Notification.EXTRA_TEXT)?.toString()
             assertNotNull(messageContent, actualContent)
+
+            val messageOnlyOnce = "Have you set the notification to only alert once?"
+            val expectedOnlyOnceFlags = Notification.FLAG_ONLY_ALERT_ONCE
+            val actualOnlyOnceFlags = notification.flags.and(Notification.FLAG_ONLY_ALERT_ONCE)
+            assertTrue(messageOnlyOnce, expectedOnlyOnceFlags == actualOnlyOnceFlags)
+
+            val messageInsistent = "Have you set the notification to be insistent?"
+            val expectedInsistentFlags = Notification.FLAG_INSISTENT
+            val actualInsistentFlags = notification.flags.and(Notification.FLAG_INSISTENT)
+            assertTrue(messageInsistent, expectedInsistentFlags == actualInsistentFlags)
+
+            //TODO add description for create channel requirement
+            //TODO add description for importance requirement
+            //TODO add description for onlyAlertOnce
+            //TODO add description for insistent
+            //TODO remove reference to tutorials point topic on notification from description
         }
     }
 }
