@@ -11,14 +11,17 @@ import org.hyperskill.tests.stopwatch.internals.CustomShadowCountDownTimer
 import org.hyperskill.tests.stopwatch.internals.StopwatchUnitTest
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.FixMethodOrder
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.junit.runners.MethodSorters
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowAlertDialog
 import java.util.concurrent.TimeUnit
 
 // Version 2.0
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Config(instrumentedPackages = ["org.hyperskill.stopwatch"], shadows = [CustomShadowCountDownTimer::class])
 @RunWith(RobolectricTestRunner::class)
 class Stage4UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java) {
@@ -56,22 +59,20 @@ class Stage4UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
     }
 
 
-    private val messageDialogNotFound = "Is dialog shown when \"settingsButton\" is clicked?"
-
     @Before
     fun setup() {
         CustomShadowCountDownTimer.handler = Handler(activity.mainLooper)
     }
 
     @Test
-    fun testShouldCheckSettingsButtonExist() {
+    fun test1_ShouldCheckSettingsButtonExist() {
         testActivity {
             settingsButton
         }
     }
 
     @Test
-    fun testShouldCheckSettingsButtonEnable() {
+    fun test2_ShouldCheckSettingsButtonEnable() {
         testActivity {
             val message1 = "view with id \"settingsButton\" should be enabled when timer is stopped"
             assertTrue(message1, settingsButton.isEnabled)
@@ -87,23 +88,22 @@ class Stage4UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
     }
 
     @Test
-    fun testShouldShowAlertDialogOnSettingsButtonClick() {
+    fun test3_ShouldShowAlertDialogOnSettingsButtonClick() {
         testActivity {
             settingsButton.clickAndRun()
-            val dialog = ShadowAlertDialog.getLatestAlertDialog()
-            assertNotNull(messageDialogNotFound, dialog)
+            getLatestDialog()
+
         }
     }
 
     @Test
-    fun testDialogButtonsShouldContainText() {
+    fun test4_DialogButtonsShouldContainText() {
         testActivity {
             val expectedOk = "OK"
             val expectedCancel = "Cancel"
 
             settingsButton.clickAndRun()
-            val dialog = ShadowAlertDialog.getLatestAlertDialog()
-            assertNotNull(messageDialogNotFound, dialog)
+            val dialog = getLatestDialog()
 
             val actualOk = dialog.getButton(AlertDialog.BUTTON_POSITIVE).text
             assertEquals("positive button contains wrong text", expectedOk, actualOk)
@@ -115,13 +115,12 @@ class Stage4UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
     }
 
     @Test
-    fun testShouldCheckLimitIsNotSetOnCancel() {
+    fun test5_ShouldCheckLimitIsNotSetOnCancel() {
         testActivity {
             val secondsToCount = 2
 
             settingsButton.clickAndRun()
-            val dialog = ShadowAlertDialog.getLatestAlertDialog()
-            assertNotNull(messageDialogNotFound, dialog)
+            val dialog = getLatestDialog()
 
             val upperLimitEditText = dialog.findViewByString<EditText>("upperLimitEditText")
             upperLimitEditText.setText("$secondsToCount")
@@ -139,13 +138,12 @@ class Stage4UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
     }
 
     @Test
-    fun testShouldCheckLimitIsSetOnOk() {
+    fun test6_ShouldCheckLimitIsSetOnOk() {
         testActivity {
             val secondsToCount = 2L
 
             settingsButton.clickAndRun()
-            val dialog = ShadowAlertDialog.getLatestAlertDialog()
-            assertNotNull(messageDialogNotFound, dialog)
+            val dialog = getLatestDialog()
 
             dialog.findViewByString<EditText>("upperLimitEditText").setText("$secondsToCount")
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).clickAndRun()
@@ -167,13 +165,12 @@ class Stage4UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
     }
 
     @Test
-    fun testShouldCheckColorsOnRestart() {
+    fun test7_ShouldCheckColorsOnRestart() {
         testActivity {
             val secondsToCount = 2L
 
             settingsButton.clickAndRun()
-            val dialog = ShadowAlertDialog.getLatestAlertDialog()
-            assertNotNull(messageDialogNotFound, dialog)
+            val dialog = getLatestDialog()
 
             dialog.findViewByString<EditText>("upperLimitEditText").setText("$secondsToCount")
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).clickAndRun()
