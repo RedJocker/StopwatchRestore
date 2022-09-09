@@ -1,6 +1,7 @@
 package org.hyperskill.tests.stopwatch.internals
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -13,6 +14,7 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
 import org.robolectric.shadow.api.Shadow
 import org.robolectric.shadows.ShadowActivity
+import org.robolectric.shadows.ShadowAlertDialog
 import org.robolectric.shadows.ShadowLooper
 import org.robolectric.shadows.ShadowToast
 import java.time.Duration
@@ -154,8 +156,6 @@ abstract class AbstractUnitTest<T : Activity>(clazz: Class<T>) {
         shadowLooper.idleFor(Duration.ofMillis(millis))
     }
 
-
-
     /**
      * Asserts that the last message toasted is the expectedMessage.
      * Assertion fails if no toast is shown with null actualLastMessage value.
@@ -163,5 +163,27 @@ abstract class AbstractUnitTest<T : Activity>(clazz: Class<T>) {
     fun assertLastToastMessageEquals(errorMessage: String, expectedMessage: String,) {
         val actualLastMessage: String? = ShadowToast.getTextOfLatestToast()
         Assert.assertEquals(errorMessage, expectedMessage, actualLastMessage)
+    }
+
+    /**
+     * Use this method to retrieve the latest AlertDialog.
+     *
+     * The existence of such AlertDialog will be asserted before returning.
+     *
+     * Robolectric only supports android.app.AlertDialog, test will not be
+     * able to find androidx.appcompat.app.AlertDialog.
+     *
+     * - Important!!! :
+     * When writing stage description state explicitly the correct version that should be imported
+     */
+    fun getLatestDialog(): AlertDialog {
+        val latestAlertDialog = ShadowAlertDialog.getLatestAlertDialog()
+
+        assertNotNull(
+            "There was no AlertDialog found. Make sure to import android.app.AlertDialog version",
+            latestAlertDialog
+        )
+
+        return latestAlertDialog!!
     }
 }
