@@ -120,12 +120,6 @@ class Stage5UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
             val expectedInsistentFlags = Notification.FLAG_INSISTENT
             val actualInsistentFlags = notification.flags.and(Notification.FLAG_INSISTENT)
             assertTrue(messageInsistent, expectedInsistentFlags == actualInsistentFlags)
-
-            //TODO add description for create channel requirement
-            //TODO add description for importance requirement
-            //TODO add description for onlyAlertOnce
-            //TODO add description for insistent
-            //TODO remove reference to tutorials point topic on notification from description
         }
     }
 }
