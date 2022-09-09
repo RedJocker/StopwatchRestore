@@ -17,7 +17,6 @@ import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import org.robolectric.shadows.ShadowAlertDialog
 import java.util.concurrent.TimeUnit
 
 // Version 2.0
@@ -99,16 +98,16 @@ class Stage4UnitTest : StopwatchUnitTest<MainActivity>(MainActivity::class.java)
     @Test
     fun test4_DialogButtonsShouldContainText() {
         testActivity {
-            val expectedOk = "OK"
-            val expectedCancel = "Cancel"
+            val expectedOk = "ok"
+            val expectedCancel = "cancel"
 
             settingsButton.clickAndRun()
             val dialog = getLatestDialog()
 
-            val actualOk = dialog.getButton(AlertDialog.BUTTON_POSITIVE).text
+            val actualOk = dialog.getButton(AlertDialog.BUTTON_POSITIVE).text.toString().lowercase()
             assertEquals("positive button contains wrong text", expectedOk, actualOk)
 
-            val actualCancel = dialog.getButton(AlertDialog.BUTTON_NEGATIVE).text
+            val actualCancel = dialog.getButton(AlertDialog.BUTTON_NEGATIVE).text.toString().lowercase()
             assertEquals("negative button contains wrong text", expectedCancel, actualCancel)
         }
 
