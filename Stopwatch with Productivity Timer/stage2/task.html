@@ -4,8 +4,6 @@
 
 <p>The simplest way to implement this functionality is to use <a href="https://developer.android.com/reference/android/os/Handler" rel="noopener noreferrer nofollow">android.os.Handler</a> and its methods, <code>postDelayed</code> or <code>postAtTime</code>.</p>
 
-<ol>
-</ol>
 
 <h2 style="text-align: center;">Objectives</h2>
 
@@ -18,6 +16,16 @@
 	<li>Pressing the <code>Start</code> button while the time is going does not affect the stopwatch: it simply continues without resetting to <code>"00:00"</code>.</li>
 	<li>Don’t use <code>startButton.isEnabled = false </code> to implement item 4. For this requirement test will ignore this parameter and click the button anyway. There is a more interesting lesson to be learned here. Hint: take care of your thread management, specially threads involved in the logic for updating the counter</li>
 </ol>
+
+<p>
+	Obs: Tests are relying on time emulation since version 2.0 of tests. Although it is possible to implement the counter feature
+	using thread schedulers coming from <code>java.util</code>, they probably won't work with tests time emulation,
+	like for example <code>java.util.Timer</code> is proven to be incompatible.
+	Prefer to use solutions coming from android package. Using <code>android.os.Handler</code> is guaranteed to work and
+	<code>android.os.CountDownTimer</code> should work as well.
+	Some apis for retrieving time cues coming from <code>java.util</code> might also be affected, but for this project calling
+	<code>System.currentTimeMillis()</code> directly should work as expected.
+</p>
 
 <h2 style="text-align: center;">Example</h2>
 
