@@ -1,6 +1,8 @@
 package org.hyperskill.tests.stopwatch.internals
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -12,6 +14,7 @@ import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
 import org.robolectric.shadow.api.Shadow
 import org.robolectric.shadows.ShadowActivity
+import org.robolectric.shadows.ShadowAlertDialog
 import org.robolectric.shadows.ShadowLooper
 import org.robolectric.shadows.ShadowToast
 import java.time.Duration
@@ -123,6 +126,25 @@ abstract class AbstractUnitTest<T : Activity>(clazz: Class<T>) {
     }
 
     /**
+     * Use this method to find views.
+     *
+     * The view existence will be assert before being returned
+     */
+    inline fun <reified T> Dialog.findViewByString(idString: String): T {
+        val id = this.context.resources.getIdentifier(idString, "id", this.context.packageName)
+        val view: View? = this.findViewById(id)
+
+        val idNotFoundMessage = "View with id \"$idString\" was not found"
+        val wrongClassMessage = "View with id \"$idString\" is not from expected class. " +
+                "Expected ${T::class.java.simpleName} found ${view?.javaClass?.simpleName}"
+
+        assertNotNull(idNotFoundMessage, view)
+        assertTrue(wrongClassMessage, view is T)
+
+        return view as T
+    }
+
+    /**
      * Use this method to perform clicks. It will also advance the clock millis milliseconds and run
      * enqueued Runnable scheduled to run on main looper in that timeframe.
      * Default value for millis is 500
@@ -141,5 +163,27 @@ abstract class AbstractUnitTest<T : Activity>(clazz: Class<T>) {
     fun assertLastToastMessageEquals(errorMessage: String, expectedMessage: String,) {
         val actualLastMessage: String? = ShadowToast.getTextOfLatestToast()
         Assert.assertEquals(errorMessage, expectedMessage, actualLastMessage)
+    }
+
+    /**
+     * Use this method to retrieve the latest AlertDialog.
+     *
+     * The existence of such AlertDialog will be asserted before returning.
+     *
+     * Robolectric only supports android.app.AlertDialog, test will not be
+     * able to find androidx.appcompat.app.AlertDialog.
+     *
+     * - Important!!! :
+     * When writing stage description state explicitly the correct version that should be imported
+     */
+    fun getLatestDialog(): AlertDialog {
+        val latestAlertDialog = ShadowAlertDialog.getLatestAlertDialog()
+
+        assertNotNull(
+            "There was no AlertDialog found. Make sure to import android.app.AlertDialog version",
+            latestAlertDialog
+        )
+
+        return latestAlertDialog!!
     }
 }
