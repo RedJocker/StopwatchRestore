@@ -34,3 +34,5 @@ files:
   visible: true
 - name: src/main/java/org/hyperskill/stopwatch/Timer.kt
   visible: true
+- name: src/test/java/org/hyperskill/tests/stopwatch/internals/CustomShadowCountDownTimer.kt
+  visible: false

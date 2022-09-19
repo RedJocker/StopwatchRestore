@@ -2,8 +2,6 @@ type: edu
 files:
 - name: src/test/java/org/hyperskill/tests/stopwatch/Stage3UnitTest.kt
   visible: false
-- name: src/test/java/org/hyperskill/tests/stopwatch/Stage1UnitTest.kt
-  visible: false
 - name: src/test/java/org/hyperskill/tests/stopwatch/internals/AbstractUnitTest.kt
   visible: false
 - name: src/test/java/org/hyperskill/tests/stopwatch/Stage2UnitTest.kt
@@ -37,4 +35,6 @@ files:
 - name: src/main/res/layout/dialog_main.xml
   visible: true
 - name: src/test/java/org/hyperskill/tests/stopwatch/Stage4UnitTest.kt
+  visible: false
+- name: src/test/java/org/hyperskill/tests/stopwatch/internals/CustomShadowCountDownTimer.kt
   visible: false
