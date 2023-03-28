@@ -1,6 +1,16 @@
 type: edu
 files:
-- name: build.gradle
-  visible: true
+- name: src/test/java/org/hyperskill/tests/stopwatch/Stage3UnitTest.kt
+  visible: false
+- name: src/test/java/org/hyperskill/tests/stopwatch/internals/AbstractUnitTest.kt
+  visible: false
+- name: src/test/java/org/hyperskill/tests/stopwatch/Stage2UnitTest.kt
+  visible: false
+- name: src/test/java/org/hyperskill/tests/stopwatch/Stage4UnitTest.kt
+  visible: false
+- name: src/test/java/org/hyperskill/tests/stopwatch/internals/StopwatchUnitTest.kt
+  visible: false
+- name: src/test/java/org/hyperskill/tests/stopwatch/Stage5UnitTest.kt
+  visible: false
 - name: src/test/java/org/hyperskill/tests/stopwatch/internals/CustomShadowCountDownTimer.kt
   visible: false

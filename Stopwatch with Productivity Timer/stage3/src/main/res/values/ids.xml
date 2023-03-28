@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <item name="mainLayout" type="id"/>
-    <item name="startButton" type="id"/>
-    <item name="resetButton" type="id"/>
-    <item name="textView" type="id"/>
-    <item name="progressBar" type="id"/>
-</resources>
